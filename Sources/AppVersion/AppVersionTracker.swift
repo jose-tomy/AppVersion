@@ -12,9 +12,7 @@ public class AppVersionTracker {
     public private(set) var previousVersion: String?
     public private(set) var history: [String]
     
-    public var isFirstLaunch: Bool {
-        return history.isEmpty
-    }
+    private(set) public var isFirstLaunch: Bool
     
     public var isUpgrade: Bool {
         guard let previous = previousVersion else { return false }
@@ -26,6 +24,7 @@ public class AppVersionTracker {
         self.currentVersion = currentVersion ?? bundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         self.previousVersion = userDefaults.string(forKey: versionKey)
         self.history = userDefaults.stringArray(forKey: historyKey) ?? []
+        self.isFirstLaunch = history.isEmpty
     }
     
     public func track() {

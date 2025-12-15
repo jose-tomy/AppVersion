@@ -31,13 +31,8 @@ final class AppVersionTests: XCTestCase {
         // Track
         tracker.track()
         
-        // After tracking
-        // isFirstLaunch is computed based on history.isEmpty. 
-        // After track(), history has 1 item, so isFirstLaunch becomes false.
-        // This is correct behavior: it WAS the first launch, but now we have tracked it.
-        // However, usually "isFirstLaunch" flag is useful during the session.
-        // Let's check the state:
-        XCTAssertFalse(tracker.isFirstLaunch) 
+        // After tracking also we treat it as the first launch for the rest of the current session.
+        XCTAssertTrue(tracker.isFirstLaunch)
         XCTAssertEqual(tracker.history.count, 1)
         XCTAssertEqual(tracker.history.first, "1.0")
         XCTAssertNil(tracker.previousVersion)
